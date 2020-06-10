@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="wagtail-collectionmodeladmin",
-    version="0.1.1",
+    version="0.1.2",
     description="Model Admin extension that utilizes the Wagtail collections",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -14,6 +14,7 @@ setup(
     author_email="ckaidos@intracom-telecom.com",
     url="https://github.com/BabisK/wagtail-collectionmodeladmin",
     packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         "wagtail>=2.6"
     ],
