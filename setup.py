@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="wagtail-collectionmodeladmin",
-    version="0.1.2",
+    version="0.1.3",
     description="Model Admin extension that utilizes the Wagtail collections",
     long_description=long_description,
     long_description_content_type="text/markdown",

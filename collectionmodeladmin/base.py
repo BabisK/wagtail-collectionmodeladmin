@@ -12,9 +12,11 @@ from collectionmodeladmin.permissions import CollectionPermissionHelper
 
 class IndexView(IndexViewModelAdmin):
     def get_queryset(self, request=None):
+        user = self.request.user
+        collections = self.permission_helper.permission_policy._collections_with_perm(user, ['add', 'change', 'delete'])
         if 'collection_id' in self.params and self.params.get('collection_id') == '':
             del self.params['collection_id']
-        return super().get_queryset(request)
+        return super().get_queryset(request).filter(collection__in=collections)
 
     def get_context_data(self, **kwargs):
         user = self.request.user
