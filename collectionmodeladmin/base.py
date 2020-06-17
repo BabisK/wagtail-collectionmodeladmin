@@ -20,7 +20,11 @@ class IndexView(IndexViewModelAdmin):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        collections = self.permission_helper.permission_policy._collections_with_perm(user, ['add', 'change', 'delete'])
+        if user.is_active and user.is_authenticated and user.is_superuser:
+            collections = Collection.objects.all()
+        else:
+            collections = self.permission_helper.permission_policy._collections_with_perm(user, ['add', 'change', 'delete'])
+
         context = {
             'collections': collections
         }
@@ -41,7 +45,7 @@ class CreateView(CreateViewModelAdmin):
 
         # If user is superuser then return form_class as is
         # Else filter the collections
-        if user.is_superuser:
+        if user.is_active and user.is_authenticated and not user.is_superuser:
             return form_class
         else:
             collections = self.permission_helper.permission_policy._collections_with_perm(user, ['add', 'change', 'delete'])
@@ -58,7 +62,7 @@ class EditView(EditViewModelAdmin):
 
         # If user is superuser then return form_class as is
         # Else filter the collections
-        if user.is_superuser:
+        if user.is_active and user.is_authenticated and not user.is_superuser:
             return form_class
         else:
             collections = self.permission_helper.permission_policy._collections_with_perm(user, ['add', 'change', 'delete'])
